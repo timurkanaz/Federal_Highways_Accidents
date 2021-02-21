@@ -1,8 +1,6 @@
 import pandas as pd
-import geopandas as gpd
 import time
 import requests as r
-import numpy as np
 from json import dumps,loads
 from numpy import random,array_split
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
