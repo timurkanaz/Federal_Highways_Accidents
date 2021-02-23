@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 import geopandas as gpd
 import time
@@ -71,7 +65,7 @@ y_2020=['MONTHS:1.2020','MONTHS:2.2020','MONTHS:3.2020','MONTHS:4.2020','MONTHS:
 ys=[y_2015,y_2016,y_2017,y_2018,y_2019,y_2020]
 
 
-# In[2]:
+
 
 
 def divide_rows():
@@ -82,7 +76,7 @@ def divide_rows():
     return rows_divided
 
 
-# In[3]:
+
 
 
 def do_post(js,f,t1,t2):
@@ -97,7 +91,7 @@ def do_post(js,f,t1,t2):
     return post_content
 
 
-# In[4]:
+
 
 
 def get_dtp(rows_part):
@@ -152,7 +146,7 @@ def get_dtp(rows_part):
             
 
 
-# In[5]:
+
 
 
 def run_parsing(tuplex):
@@ -161,7 +155,6 @@ def run_parsing(tuplex):
     return l
 
 
-# In[6]:
 
 
 def work_with_tuples(l):
@@ -189,7 +182,7 @@ def work_with_tuples(l):
     acc_df.to_excel("accidents.xlsx",index=False)
 
 
-# In[7]:
+
 
 
 def gibdd_stat_parser():
