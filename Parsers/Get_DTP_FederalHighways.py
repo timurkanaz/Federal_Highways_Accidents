@@ -218,5 +218,6 @@ def Federal_Highways_DTP_Parser():
     df_f.loc[df_f.Road.isin(["Внешняя сторона","Внутренняя сторона"]),"Road_Abbr"]="МКАД"
     df_f.loc[df_f.Road=="«Таврида» Керчь – Симферополь - Севастополь","Road_Abbr"]="А-291"
     df_f.loc[df_f.Road=="Южно-Сахалинск - Оха","Road_Abbr"]="А-393"
+    df_f.Road_Abbr=stat.Road_Abbr.str.rstrip().str.lstrip()
     df_f.to_excel("Federal_Highways.xlsx",index=False)
 
