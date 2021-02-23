@@ -67,7 +67,6 @@ ys=[y_2015,y_2016,y_2017,y_2018,y_2019,y_2020]
 
 
 
-
 def divide_rows():
     regs=list(df1.Region.unique())
     rows_divided=list(array_split(regs,4))
@@ -89,7 +88,6 @@ def do_post(js,f,t1,t2):
             time.sleep(10)
             print("Таймаут {},{}".format(t1,t2))
     return post_content
-
 
 
 
@@ -147,13 +145,10 @@ def get_dtp(rows_part):
 
 
 
-
-
 def run_parsing(tuplex):
     pool=ThreadPool(4)
     l=pool.map(get_dtp,tuplex)
     return l
-
 
 
 
@@ -184,8 +179,7 @@ def work_with_tuples(l):
 
 
 
-
-def gibdd_stat_parser():
+def Kartogramma_DTP_Parser():
     v=divide_rows()
     l1=run_parsing(v)
     work_with_tuples(l1)
