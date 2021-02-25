@@ -1,5 +1,4 @@
 import pandas as pd
-import geopandas as gpd
 import time
 import requests as r
 import numpy as np
@@ -7,8 +6,8 @@ from json import dumps,loads
 from numpy import random,array_split
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 r.packages.urllib3.disable_warnings(InsecureRequestWarning)
-from os import system
 from multiprocessing.pool import ThreadPool
+
 desktop_agents = ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
                  'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
