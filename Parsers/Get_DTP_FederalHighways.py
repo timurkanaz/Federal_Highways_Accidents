@@ -208,6 +208,7 @@ def Federal_Highways_DTP_Parser():
     for l_l in l:
         for l_l_l in l_l:
             tuples.append(l_l_l)
+    print("Парсинг закончен.Работаю с данными")
     roads=[i[0] for i in tuples]
     dates=[i[1] for i in tuples]
     districts=[i[2] for i in tuples]
@@ -233,5 +234,9 @@ def Federal_Highways_DTP_Parser():
     df_f.loc[df_f.Road=="«Таврида» Керчь – Симферополь - Севастополь","Road_Abbr"]="А-291"
     df_f.loc[df_f.Road=="Южно-Сахалинск - Оха","Road_Abbr"]="А-393"
     df_f.Road_Abbr=df_f.Road_Abbr.str.rstrip().str.lstrip()
-    df_f.to_excel("Federal_Highways.xlsx",index=False)
+    df_f["KM"]=df_f["KM"].astype("category")
+    df_f["Type"]=df_f["Type"].astype("category")
+    df_f["Date"]=pd.to_datetime(df_f["Date"],format="%d.%m.%Y")
+    print("Сохраняю")
+    df_f.to_excel("Federal_Highways_Accidents.xlsx",index=False)
 
