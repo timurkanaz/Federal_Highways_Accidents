@@ -1,4 +1,5 @@
 import pandas as pd
+import geopandas as gpd
 import time
 import requests as r
 import numpy as np
@@ -6,8 +7,8 @@ from json import dumps,loads
 from numpy import random,array_split
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 r.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from os import system
 from multiprocessing.pool import ThreadPool
-
 desktop_agents = ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
                  'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -120,10 +121,12 @@ def get_dtp(rows_part):
                                     regions1=tup[0]
                                     districts1=tup[1]
                                     try:
-                                        type1=i['infoDtp']['dor_z']
+                                        road_type=i['infoDtp']['dor_z']
                                     except:
                                         type1=np.nan
-                                    content.append((LATS1,LONS1,regions1,districts1,type1))
+                                    tip=i["DTP_V"]
+                                    date=i["date"]
+                                    content.append((LATS1,LONS1,regions1,districts1,road_type,tip,date))
                                     iter_num+=1
                    
                             
@@ -171,9 +174,12 @@ def work_with_tuples(l):
     regions=[i[2] for i in tuples]
     districts=[i[3] for i in tuples]
     road_type=[i[4] for i in tuples]
-    acc_df=pd.DataFrame([regions,districts,road_type,LAT,LON]).T
-    acc_df.columns=["Region","District","Road_Type","LAT","LON"]
-    acc_df.to_excel("accidents.xlsx",index=False)
+    types=[i[5] for i in tuples]
+    dates=[i[6] for i in tuples]
+    acc_df=pd.DataFrame([regions,districts,dates,types,road_type,LAT,LON]).T
+    acc_df.columns=["Region","District","Date","Type","Road_Type","LAT","LON"]
+    acc_df["Date"]=pd.to_datetime(acc_df["Date"],format="%d.%m.%Y")
+    acc_df.to_excel("Accidents_Kartogramma.xlsx",index=False)
 
 
 
