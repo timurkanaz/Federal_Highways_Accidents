@@ -1,7 +1,7 @@
 <body>
  <h2>A little bit about this repository</h2><br>
  <div>Data on traffic accidents on federal highways in Russia contain information from January 2015 to January 2024.<br><br>
-<a href="https://public.tableau.com/views/FederalHighwaysAccidents/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link"> Dashboard, based on collected data </a> <br>
+<a href="https://public.tableau.com/views/FederalHighwaysAccidents/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link" target="_blank"> Dashboard, based on collected data </a> <br>
 </div>
 <br>
  <div>
