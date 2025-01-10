@@ -13,7 +13,7 @@ import time
 import re
 import os
 
-months=['MONTHS:12.2015','MONTHS:12.2016','MONTHS:12.2017','MONTHS:12.2018','MONTHS:12.2019','MONTHS:12.2020','MONTHS:12.2021','MONTHS:12.2022','MONTHS:11.2023']
+months=['MONTHS:12.2015','MONTHS:12.2016','MONTHS:12.2017','MONTHS:12.2018','MONTHS:12.2019','MONTHS:12.2020','MONTHS:12.2021','MONTHS:12.2022','MONTHS:12.2023','MONTHS:12.2024']
 
 
 
@@ -34,6 +34,7 @@ inc=50
 
 
 def Get_OKTMOS():
+    time.sleep(180)
     regions_dict = {"maptype":1,"region":"877","date":"[\"11.2020\"]","pok":"1"}
     k=1
     while k==1:
@@ -41,7 +42,7 @@ def Get_OKTMOS():
             raw_data = r.post("http://stat.gibdd.ru/map/getMainMapData", json=regions_dict)
             k=0
         except:
-            time.sleep(10)
+            time.sleep(20)
     raw_reg_js=loads(raw_data.content)
     raw_reg_js=loads(loads(raw_reg_js["metabase"])[0]["maps"])
     oktmos=[(i["id"],i["name"]) for i in raw_reg_js]
@@ -69,6 +70,7 @@ Get_OKTMOS()
 
 
 def Get_Road_Info():
+    time.sleep(180)
     raw_data=r.post("http://stat.gibdd.ru/road/getMainMapData")
     data=loads(loads(raw_data.content)["metabase"])["features"]
     ids=[]
@@ -119,12 +121,17 @@ df1=Get_Road_Info()
 
 def do_post(js,f0,t1,t2):
     u=0
+    c=0
     while u==0:
         try:
             post_content=f0.post("http://stat.gibdd.ru/road/getDorKMData",json=js,headers={"User-Agent":random.choice(desktop_agents)},verify=False)
             u=1
         except:
-            time.sleep(10)
+            c+=1
+            if c%5==0:
+                time.sleep(50)
+            else:
+                time.sleep(10)
             print("Таймаут {},{}".format(t1,t2))
     return post_content
 
@@ -182,12 +189,17 @@ def make_km_frame():
 
 def do_post_card(js,f0,t1,t2):
     u=0
+    c=0
     while u==0:
         try:
             post_content=f0.post("http://stat.gibdd.ru/road/getDorKMKardList",json=js,headers={"User-Agent":random.choice(desktop_agents)},verify=False)
             u=1
         except:
-            time.sleep(10)
+            c+=1
+            if c%5==0:
+                time.sleep(50)
+            else:
+                time.sleep(20)
             print("Таймаут {},{}".format(t1,t2))
     return post_content
 
@@ -200,9 +212,10 @@ def get_dtp_cards(rows_divided):
     kard_data=[]
     with r.Session() as fk:
         for ind,part in enumerate(rows_part):
+            print(f"Поток {num}. Начинается обработка региона-{part}")
             indexes=list(df2[df2.Region==part].index)
             x=0
-            for index in indexes:
+            for ii,index in enumerate(indexes):
                 tup=tuple(df2.iloc[index,:])
                 st=1
                 j=True
@@ -252,12 +265,12 @@ def get_dtp_cards(rows_divided):
                                               weather,spch,brightn,change_motion,nedostatk,UDS_NA_DTP,UDS_NEAR_DTP))
                     except:
                         j=False
-            print(part,x)
-            time.sleep(20)
+            print(part,x,f"Поток {num}. Обработано {ind+1}/{len(rows_part)}")
+            time.sleep(50)
     return kard_data
 
 
-# In[10]:
+# In[9]:
 
 
 def Federal_Highways_DTP_Parser():
@@ -321,9 +334,10 @@ def Federal_Highways_DTP_Parser():
     df_f["Date"]=pd.to_datetime(df_f["Date"],format="%d.%m.%Y")
     print("Сохраняю")
     df_f.to_excel("Federal_Highways_Accidents.xlsx",index=False)
+    print("Файл сохранен")
 
 
-# In[11]:
+# In[10]:
 
 
 Federal_Highways_DTP_Parser()
